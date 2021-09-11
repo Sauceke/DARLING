@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31424.327
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BepInEx.DARLING.KK", "BepInEx.DARLING.KK\BepInEx.DARLING.KK.csproj", "{4240B0A4-AED6-46A6-830C-8ACC316849EB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4240B0A4-AED6-46A6-830C-8ACC316849EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4240B0A4-AED6-46A6-830C-8ACC316849EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4240B0A4-AED6-46A6-830C-8ACC316849EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4240B0A4-AED6-46A6-830C-8ACC316849EB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {ED2C0E68-0A9F-465E-913A-7AA4B7F12851}
+	EndGlobalSection
+EndGlobal
