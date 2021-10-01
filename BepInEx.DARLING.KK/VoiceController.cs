@@ -152,7 +152,7 @@ namespace BepInEx.DARLING.KK
         private void Undress()
         {
             InputSimulator.MouseButtonUp(0);
-            sprite.OnClickAllCloth(2);
+            sprite.OnClickAllCloth(3);
             InputSimulator.UnsetMouseButton(0);
         }
     }
