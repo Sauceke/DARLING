@@ -9,7 +9,7 @@ using UnityEngine;
 namespace BepInEx.DARLING.KK
 {
 
-    [BepInPlugin(GUID, "D. A. R. L. I. N. G.", "1.0.0")]
+    [BepInPlugin(GUID, "D. A. R. L. I. N. G.", VersionInfo.Version)]
     internal class DARLINGPlugin : BaseUnityPlugin
     {
         private const string GUID = "Sauceke.DARLING";
