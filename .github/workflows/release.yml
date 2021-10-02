@@ -27,7 +27,7 @@ jobs:
      
     - name: Restore NuGet Packages
       run: |
-        nuget sources add -Name "nhydockGithub" -Source "https://nuget.pkg.github.com/nhydock/index.json" -username ${{ secrets.PACKAGES_USER }} -password ${{ secrets.PACKAGES_TOKEN }}
+        nuget sources add -Name "nhydockGithub" -Source "https://nuget.pkg.github.com/nhydock/index.json" -username ${{ secrets.PACKAGES_USER }} -password ${{ secrets.PACKAGES_TOKEN }} -StorePasswordInClearText
         nuget restore BepInEx.DARLING.sln
  
     - name: Build and Publish
