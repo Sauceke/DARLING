@@ -29,21 +29,27 @@ namespace BepInEx.DARLING.KK
 
         public VoiceController()
         {
-            commands = new Dictionary<string, Action>
+            if (Application.systemLanguage == SystemLanguage.Japanese)
             {
-                { "undress", Undress },
-                { "missionary", () => SelectPose("Missionary", "正常位") },
-                { "cowgirl", () => SelectPose("Cowgirl", "騎乗位") },
-                { "doggy", () => SelectPose("Doggy", "後背位") },
-                { "blowjob", () => SelectPose("Blowjob", "フェラ") },
-                { "insert", Insert },
-                { "put it in", Insert },
-                { "faster", () => ChangeSpeed(+0.2f) },
-                { "slower", () => ChangeSpeed(-0.2f) },
-                { "stronger", () => ChangeStrength(hard: true) },
-                { "weaker", () => ChangeStrength(hard: false) },
-                { "I'm coming", Orgasm }
-            };
+
+            }
+            else { 
+                commands = new Dictionary<string, Action>
+                {
+                    { "undress", Undress },
+                    { "missionary", () => SelectPose("Missionary", "正常位") },
+                    { "cowgirl", () => SelectPose("Cowgirl", "騎乗位") },
+                    { "doggy", () => SelectPose("Doggy", "後背位") },
+                    { "blowjob", () => SelectPose("Blowjob", "フェラ") },
+                    { "insert", Insert },
+                    { "put it in", Insert },
+                    { "faster", () => ChangeSpeed(+0.2f) },
+                    { "slower", () => ChangeSpeed(-0.2f) },
+                    { "stronger", () => ChangeStrength(hard: true) },
+                    { "weaker", () => ChangeStrength(hard: false) },
+                    { "I'm coming", Orgasm }
+                };
+            }
         }
 
         private void Orgasm()
