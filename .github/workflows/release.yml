@@ -27,6 +27,7 @@ jobs:
      
     - name: Restore NuGet Packages
       run: |
+        nuget setApiKey ${{ secrets.PACKAGES_TOKEN }} -Source "https://nuget.pkg.github.com/nhydock/index.json"
         nuget sources add -Name "nhydockGithub" -Source "https://nuget.pkg.github.com/nhydock/index.json" -username ${{ secrets.PACKAGES_USER }} -password ${{ secrets.PACKAGES_TOKEN }} -StorePasswordInClearText
         nuget restore BepInEx.DARLING.sln
  
