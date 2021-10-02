@@ -27,9 +27,8 @@ jobs:
      
     - name: Restore NuGet Packages
       run: |
-        nuget setApiKey ${{ secrets.PACKAGES_TOKEN }} -Source "https://nuget.pkg.github.com/nhydock/index.json"
-        nuget sources add -Name "nhydockGithub" -Source "https://nuget.pkg.github.com/nhydock/index.json" -username ${{ secrets.PACKAGES_USER }} -password ${{ secrets.PACKAGES_TOKEN }} -StorePasswordInClearText
-        nuget restore BepInEx.DARLING.sln
+        dotnet nuget add source --username ${{ secrets.PACKAGES_USER }} --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name nhydockGithub "https://nuget.pkg.github.com/nhydock/index.json"
+        dotnet restore
  
     - name: Build and Publish
       run: msbuild BepInEx.DARLING.sln /p:Configuration=Release /p:DeployOnBuild=true /p:PublishProfile=FolderProfile /p:Version=${{ github.event.inputs.version }}
