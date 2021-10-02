@@ -26,13 +26,15 @@ jobs:
       uses: NuGet/setup-nuget@v1.0.2
      
     - name: Restore NuGet Packages
-      run: nuget restore BepInEx.DARLING.sln
+      run: |
+        nuget sources add -Name "nhydockGithub" -Source "https://nuget.pkg.github.com/nhydock/index.json" -username ${{ secrets.PACKAGES_USER }} -password ${{ secrets.PACKAGES_TOKEN }}
+        nuget restore BepInEx.DARLING.sln
  
     - name: Build and Publish
       run: msbuild BepInEx.DARLING.sln /p:Configuration=Release /p:DeployOnBuild=true /p:PublishProfile=FolderProfile /p:Version=${{ github.event.inputs.version }}
     
     - name: Zip artifacts
-      run: |-
+      run: |
         powershell Compress-Archive -Path bin/BepInEx -DestinationPath DARLING.zip
 
     - name: Create Release
