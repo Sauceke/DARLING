@@ -19,3 +19,13 @@ Made in an attempt to replace/facilitate Koikatsu's awkward VR control system.
 - **`stronger`**: makes her go harder
 - **`weaker`**: makes her go less hard
 - **`I'm coming`**: immediately fills the excitement gauges (DARLING locks the gauges automatically if you used the voice command for insertion)
+
+## Supported voice commands (Japanese)
+- **`脱いで`**: undresses the heroine
+- **`正常位`**, **`騎乗位`**, **`後背位`**, **`フェラ`**: tells her which pose to assume (sitting/wall variants also work)
+- **`入れるぞ`**: initiates the standard insertion procedure
+- **`もっと早く`**: starts the action, and increases speed if it's already started
+- **`もっとゆっくり`**: decreases speed
+- **`もっと強く`**: makes her go harder
+- **`もっと優しく`**: makes her go less hard
+- **`もうダメ`**: immediately fills the excitement gauges
