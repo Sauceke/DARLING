@@ -27,13 +27,49 @@ namespace BepInEx.DARLING.KK
 
         private Dictionary<string, Action> commands;
 
-        public VoiceController()
+        private void Orgasm()
         {
+            sprite.OnFemaleGaugeLock(false);
+            sprite.OnMaleGaugeLock(false);
+            hFlag.FemaleGaugeUp(100f, _force: true);
+            hFlag.MaleGaugeUp(100f);
+        }
+
+        private void Start()
+        {
+            StartListening();
+        }
+
+        private void OnDestroy()
+        {
+            recognizer.Dispose();
+        }
+
+        private void StartListening()
+        {
+            recognizer?.Stop();
+            recognizer?.Dispose();
             if (Application.systemLanguage == SystemLanguage.Japanese)
             {
-
+                commands = new Dictionary<string, Action>
+                {
+                    { "脱いで", Undress },
+                    { "正常位", () => SelectPose("Missionary", "正常位") },
+                    { "騎乗位", () => SelectPose("Cowgirl", "騎乗位") },
+                    { "後背位", () => SelectPose("Doggy", "後背位") },
+                    { "フェラ", () => SelectPose("Blowjob", "フェラ") },
+                    { "入れて", Insert },
+                    { "入れるぞ", Insert },
+                    { "もっと早く", () => ChangeSpeed(+0.2f) },
+                    { "もっとゆっくり", () => ChangeSpeed(-0.2f) },
+                    { "もっと強く", () => ChangeStrength(hard: true) },
+                    { "もっと優しく", () => ChangeStrength(hard: false) },
+                    { "行っちゃう", Orgasm },
+                    { "もうダメ", Orgasm }
+                };
             }
-            else { 
+            else
+            {
                 commands = new Dictionary<string, Action>
                 {
                     { "undress", Undress },
@@ -50,25 +86,13 @@ namespace BepInEx.DARLING.KK
                     { "I'm coming", Orgasm }
                 };
             }
-        }
-
-        private void Orgasm()
-        {
-            sprite.OnFemaleGaugeLock(false);
-            sprite.OnMaleGaugeLock(false);
-            hFlag.FemaleGaugeUp(100f, _force: true);
-            hFlag.MaleGaugeUp(100f);
-        }
-
-        void Start()
-        {
+            foreach (var entry in DARLINGPlugin.GetCustomCommands())
+            {
+                commands[entry.Key] = () => SelectPose(entry.Value);
+            }
             recognizer = new KeywordRecognizer(commands.Keys.ToArray());
             recognizer.OnPhraseRecognized += Recognizer_OnPhraseRecognized;
-        }
-
-        void OnDestroy()
-        {
-            recognizer.Dispose();
+            DARLINGPlugin.Logger.LogDebug("At your service.");
         }
 
         protected override void OnStartH(BaseLoader proc, HFlag hFlag, bool vr)
