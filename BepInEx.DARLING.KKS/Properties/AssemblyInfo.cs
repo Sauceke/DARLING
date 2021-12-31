@@ -1,15 +1,16 @@
 ﻿using AutoVersioning;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("DARLING.KK")]
+[assembly: AssemblyTitle("BepInEx.DARLING.KKS")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("DARLING.KK")]
+[assembly: AssemblyProduct("BepInEx.DARLING.KKS")]
 [assembly: AssemblyCopyright("Copyright ©  2021")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +21,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("4240b0a4-aed6-46a6-830c-8acc316849eb")]
+[assembly: Guid("3b28675b-1a7b-4320-82d4-cf54dbef2331")]
 
 // Version information for an assembly consists of the following four values:
 //

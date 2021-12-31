@@ -1,4 +1,5 @@
-﻿using BepInEx.Configuration;
+﻿using AutoVersioning;
+using BepInEx.Configuration;
 using BepInEx.Logging;
 using KKAPI.MainGame;
 using LitJson;

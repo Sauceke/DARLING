@@ -1,7 +1,6 @@
 ﻿using BepInEx.Unity;
 using HarmonyLib;
 using Illusion.Game;
-using KKAPI.MainGame;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,13 +11,12 @@ using UnityEngine.Windows.Speech;
 
 namespace BepInEx.DARLING.KK
 {
-    public class VoiceController : GameCustomFunctionController
+    public partial class VoiceController
     {
         private KeywordRecognizer recognizer;
         private HFlag hFlag;
         private HSprite sprite;
         private List<HActionBase> lstProc;
-        private GameObject fakeAnimButton;
 
         private IEnumerable<GameObject> AnimationNames {
             get
@@ -109,7 +107,7 @@ namespace BepInEx.DARLING.KK
             DARLINGPlugin.Logger.LogDebug("At your service.");
         }
 
-        protected override void OnStartH(BaseLoader proc, HFlag hFlag, bool vr)
+        private void _OnStartH(MonoBehaviour proc, HFlag hFlag)
         {
             this.hFlag = hFlag;
             sprite = Traverse.Create(proc).Field<HSprite>("sprite").Value;
@@ -118,13 +116,10 @@ namespace BepInEx.DARLING.KK
                 sprite = Traverse.Create(proc).Field<HSprite[]>("sprites").Value[1];
             }
             lstProc = Traverse.Create(proc).Field<List<HActionBase>>("lstProc").Value;
-            fakeAnimButton = Instantiate(sprite.objMotionListNode, gameObject.transform, false);
-            fakeAnimButton.AddComponent<HSprite.AnimationInfoComponent>();
-            fakeAnimButton.SetActive(true);
             StartListening();
         }
 
-        protected override void OnEndH(BaseLoader proc, HFlag hFlag, bool vr)
+        private void _OnEndH(MonoBehaviour proc, HFlag hFlag)
         {
             recognizer.Stop();
             recognizer.Dispose();
