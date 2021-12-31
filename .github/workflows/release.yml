@@ -40,7 +40,9 @@ jobs:
       run: msbuild BepInEx.DARLING.sln /p:Configuration=Release /p:DeployOnBuild=true /p:PublishProfile=FolderProfile /p:Version=${{ github.event.inputs.version }}
 
     - name: Zip artifacts
-      run: powershell Compress-Archive -Path bin/BepInEx -DestinationPath DARLING.zip
+      run: |
+        powershell Compress-Archive -Path bin/DARLING.KK/BepInEx -DestinationPath DARLING_KK.zip
+        powershell Compress-Archive -Path bin/DARLING.KKS/BepInEx -DestinationPath DARLING_KKS.zip
       
     - name: Create Release
       id: create_release
@@ -60,6 +62,16 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: DARLING.zip
-        asset_name: DARLING_${{ github.event.inputs.version }}.zip
+        asset_path: DARLING_KK.zip
+        asset_name: DARLING_${{ github.event.inputs.version }}_for_Koikatsu.zip
+        asset_content_type: application/zip
+
+    - name: Upload Koikatsu Sunshine Plugin
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: DARLING_KK.zip
+        asset_name: DARLING_${{ github.event.inputs.version }}_for_Koikatsu_Sunshine.zip
         asset_content_type: application/zip
