@@ -72,6 +72,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: DARLING_KK.zip
+        asset_path: DARLING_KKS.zip
         asset_name: DARLING_${{ github.event.inputs.version }}_for_Koikatsu_Sunshine.zip
         asset_content_type: application/zip
