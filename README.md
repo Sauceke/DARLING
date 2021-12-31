@@ -16,8 +16,8 @@ Made in an attempt to replace/facilitate Koikatsu's awkward VR control system.
 - **`insert`** or **`put it in`**: puts the thing into the thing
 - **`faster`**: starts the action, and increases speed if it's already started
 - **`slower`**: decreases speed
-- **`stronger`**: makes her go harder
-- **`weaker`**: makes her go less hard
+- **`stronger`** or **`harder`**: makes her go harder
+- **`weaker`** or **`softer`**: makes her go less hard
 - **`stop`** or **`wait`**: makes her stop
 - **`I'm coming`**: immediately fills the excitement gauges (DARLING locks the gauges automatically if you used the voice command for insertion)
 
