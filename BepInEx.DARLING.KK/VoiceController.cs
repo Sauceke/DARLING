@@ -5,6 +5,7 @@ using KKAPI.MainGame;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Windows.Speech;
@@ -14,15 +15,29 @@ namespace BepInEx.DARLING.KK
     public class VoiceController : GameCustomFunctionController
     {
         private KeywordRecognizer recognizer;
-        private BaseLoader proc;
         private HFlag hFlag;
         private HSprite sprite;
         private List<HActionBase> lstProc;
         private GameObject fakeAnimButton;
 
-        private List<HSceneProc.AnimationListInfo>[] AnimationLists => Traverse.Create(proc)
-            .Field<List<HSceneProc.AnimationListInfo>[]>("lstUseAnimInfo")
-            .Value;
+        private IEnumerable<GameObject> AnimationNames {
+            get
+            {
+                var animations = Traverse
+                    .Create(sprite)
+                    .Field<List<HSceneProc.AnimationListInfo>[]>("lstUseAnimInfo")
+                    .Value
+                    .SelectMany(a => a)
+                    .ToList();
+                var fakeParent = new GameObject();
+                fakeParent.AddComponent<VerticalLayoutGroup>();
+                fakeParent.AddComponent<ContentSizeFitter>();
+                sprite.LoadMotionList(animations, fakeParent);
+                return fakeParent.GetComponentsInChildren<HSprite.AnimationInfoComponent>()
+                    .Select(comp => comp.gameObject);
+            }
+        }
+
         private HActionBase CurrentProc => lstProc[(int)hFlag.mode];
 
         private Dictionary<string, Action> commands;
@@ -33,11 +48,6 @@ namespace BepInEx.DARLING.KK
             sprite.OnMaleGaugeLock(false);
             hFlag.FemaleGaugeUp(100f, _force: true);
             hFlag.MaleGaugeUp(100f);
-        }
-
-        private void Start()
-        {
-            StartListening();
         }
 
         private void OnDestroy()
@@ -54,16 +64,14 @@ namespace BepInEx.DARLING.KK
                 commands = new Dictionary<string, Action>
                 {
                     { "脱いで", Undress },
-                    { "正常位", () => SelectPose("Missionary", "正常位") },
-                    { "騎乗位", () => SelectPose("Cowgirl", "騎乗位") },
-                    { "後背位", () => SelectPose("Doggy", "後背位") },
-                    { "フェラ", () => SelectPose("Blowjob", "フェラ") },
                     { "入れて", Insert },
                     { "入れるぞ", Insert },
                     { "もっと早く", () => ChangeSpeed(+0.2f) },
                     { "もっとゆっくり", () => ChangeSpeed(-0.2f) },
                     { "もっと強く", () => ChangeStrength(hard: true) },
                     { "もっと優しく", () => ChangeStrength(hard: false) },
+                    { "ストップ", Stop },
+                    { "待って", Stop },
                     { "行っちゃう", Orgasm },
                     { "もうダメ", Orgasm }
                 };
@@ -73,18 +81,23 @@ namespace BepInEx.DARLING.KK
                 commands = new Dictionary<string, Action>
                 {
                     { "undress", Undress },
-                    { "missionary", () => SelectPose("Missionary", "正常位") },
-                    { "cowgirl", () => SelectPose("Cowgirl", "騎乗位") },
-                    { "doggy", () => SelectPose("Doggy", "後背位") },
-                    { "blowjob", () => SelectPose("Blowjob", "フェラ") },
                     { "insert", Insert },
                     { "put it in", Insert },
                     { "faster", () => ChangeSpeed(+0.2f) },
                     { "slower", () => ChangeSpeed(-0.2f) },
                     { "stronger", () => ChangeStrength(hard: true) },
+                    { "harder", () => ChangeStrength(hard: true) },
                     { "weaker", () => ChangeStrength(hard: false) },
+                    { "softer", () => ChangeStrength(hard: false) },
+                    { "stop", Stop },
+                    { "wait", Stop },
                     { "I'm coming", Orgasm }
                 };
+            }
+            foreach (var animName in AnimationNames.Select(
+                btn => btn.GetComponentInChildren<TextMeshProUGUI>().text))
+            {
+                commands[animName.ToLower()] = () => SelectPose(animName);
             }
             foreach (var entry in DARLINGPlugin.GetCustomCommands())
             {
@@ -92,12 +105,12 @@ namespace BepInEx.DARLING.KK
             }
             recognizer = new KeywordRecognizer(commands.Keys.ToArray());
             recognizer.OnPhraseRecognized += Recognizer_OnPhraseRecognized;
+            recognizer.Start();
             DARLINGPlugin.Logger.LogDebug("At your service.");
         }
 
         protected override void OnStartH(BaseLoader proc, HFlag hFlag, bool vr)
         {
-            this.proc = proc;
             this.hFlag = hFlag;
             sprite = Traverse.Create(proc).Field<HSprite>("sprite").Value;
             if (sprite == null)
@@ -108,17 +121,19 @@ namespace BepInEx.DARLING.KK
             fakeAnimButton = Instantiate(sprite.objMotionListNode, gameObject.transform, false);
             fakeAnimButton.AddComponent<HSprite.AnimationInfoComponent>();
             fakeAnimButton.SetActive(true);
-            recognizer.Start();
+            StartListening();
         }
 
         protected override void OnEndH(BaseLoader proc, HFlag hFlag, bool vr)
         {
             recognizer.Stop();
+            recognizer.Dispose();
+            commands.Clear();
         }
 
         private void Recognizer_OnPhraseRecognized(PhraseRecognizedEventArgs e)
         {
-            DARLINGPlugin.Logger.LogDebug($"Voice command: {e.text}");
+            DARLINGPlugin.Logger.LogInfo($"Voice command: {e.text}");
             commands[e.text].Invoke();
         }
 
@@ -141,28 +156,26 @@ namespace BepInEx.DARLING.KK
 
         private void SelectPose(params string[] knownNames)
         {
-            var selected = AnimationLists.SelectMany(a => a)
-                .Where(anim => knownNames.Any(name => anim.nameAnimation.Contains(name)))
-                .FirstOrDefault();
-            if (selected == null)
+            foreach (var button in AnimationNames)
             {
-                Utils.Sound.Play(SystemSE.cancel);
-                return;
+                var text = button.GetComponentInChildren<TextMeshProUGUI>().text;
+                if (knownNames.Any(name => text.ToLower() == name.ToLower()))
+                {
+                    button.GetComponent<Toggle>().isOn = false;
+                    sprite.OnChangePlaySelect(button);
+                    return;
+                }
             }
-            fakeAnimButton.GetComponent<HSprite.AnimationInfoComponent>().info = selected;
-            fakeAnimButton.GetComponent<Toggle>().isOn = false;
-            sprite.OnChangePlaySelect(fakeAnimButton);
-            fakeAnimButton.GetComponent<HSprite.AnimationInfoComponent>().info = null;
+            Utils.Sound.Play(SystemSE.cancel);
         }
 
         private void ChangeSpeed(float delta)
         {
-            if (hFlag.mode == HFlag.EMode.sonyu)
+            SetAutoSpeed(true);
+            if (hFlag.mode == HFlag.EMode.houshi
+                && hFlag.nowAnimStateName == "Idle")
             {
-                if (!((HSonyu)CurrentProc).isAuto)
-                {
-                    hFlag.click = HFlag.ClickKind.modeChange;
-                }
+                CurrentProc.MotionChange(1);
             }
             hFlag.speedCalc = Mathf.Clamp(hFlag.speedCalc + delta, 0, 1);
             sprite.OnFemaleGaugeLock(true);
@@ -179,11 +192,32 @@ namespace BepInEx.DARLING.KK
             }
         }
 
+        private void Stop()
+        {
+            SetAutoSpeed(false);
+            if (hFlag.mode == HFlag.EMode.houshi)
+            {
+                CurrentProc.MotionChange(0);
+            }
+            hFlag.speedCalc = 0f;
+        }
+
         private void Undress()
         {
             InputSimulator.MouseButtonUp(0);
             sprite.OnClickAllCloth(3);
             InputSimulator.UnsetMouseButton(0);
+        }
+
+        private void SetAutoSpeed(bool auto)
+        {
+            if (hFlag.mode == HFlag.EMode.sonyu)
+            {
+                if (auto != ((HSonyu)CurrentProc).isAuto)
+                {
+                    hFlag.click = HFlag.ClickKind.modeChange;
+                }
+            }
         }
     }
 }
