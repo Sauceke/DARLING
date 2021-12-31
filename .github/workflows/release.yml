@@ -32,6 +32,7 @@ jobs:
     
     - name: Restore NuGet Packages
       run: |
+        dotnet nuget remove source nhydockGithub 
         dotnet nuget add source --username ${{ secrets.PACKAGES_USER }} --password ${{ secrets.PACKAGES_TOKEN }} --store-password-in-clear-text --name nhydockGithub "https://nuget.pkg.github.com/nhydock/index.json"
         nuget restore
  
