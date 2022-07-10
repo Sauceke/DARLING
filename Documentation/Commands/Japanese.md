@@ -46,7 +46,7 @@ Makes her go less hard.
 
 <br>
 
-### `  ストップ  ` / `  待って  `
+### `  ストップ  `  /  `  待って  `
 
 Makes her stop.
 
