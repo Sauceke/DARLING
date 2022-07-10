@@ -1,33 +1,57 @@
-# D. A. R. L. I. N. G.
-<sup><sup>(Digital Assistant Recognizing Lewd Intent Near Girls)</sup></sup>
 
-Voice assistant for Koikatsu and Koikatsu Sunshine that lets you control sex scenes with voice commands.
+# D. A. R. L. I. N. G.   [![Badge License]][License]
 
-Made in an attempt to replace/facilitate Koikatsu's awkward VR control system.
+<sup>**D**igital **A**ssistant **R**ecognizing **L**ewd **I**ntent **N**ear **G**irls</sup>
+
+<br>
+
+A voice assistant for **[Koikatsu]** and **[Koikatsu Sunshine]** that lets <br>
+you control sex scenes with voice commands as an attempt to <br>
+replace / facilitate **Koikatsu**'s awkward VR control system.
+
+<br>
+<br>
 
 ## Dependencies
-- [BepInEx](https://github.com/BepInEx/BepInEx/releases) 5.4.12 or later
-- [KKAPI](https://github.com/IllusionMods/IllusionModdingAPI/releases) 1.23.0 or later
-- [UnityInput](https://github.com/nhydock/BepInEx.UnityInput/releases) 1.0.0 or later (shipped with the release for convenience)
 
-## Supported voice commands
-- **`<pose name>`**: switches to the given H pose (works for sideloaded poses too)
-- **`undress`**: undresses the heroine
-- **`insert`** or **`put it in`**: puts the thing into the thing
-- **`faster`**: starts the action, and increases speed if it's already started
-- **`slower`**: decreases speed
-- **`stronger`** or **`harder`**: makes her go harder
-- **`weaker`** or **`softer`**: makes her go less hard
-- **`stop`** or **`wait`**: makes her stop
-- **`I'm coming`**: immediately fills the excitement gauges (DARLING locks the gauges automatically if you used the voice command for insertion)
+-   **[UnityInput]**  `1.0.0+`
+    
+    *Shipped with the release for convenience.*
 
-## Supported voice commands (Japanese)
-- **`＜体位名＞`**: switches to the given H pose
-- **`脱いで`**: undresses the heroine
-- **`入れるぞ`**: puts the thing into the thing
-- **`もっと早く`**: starts the action, and increases speed if it's already started
-- **`もっとゆっくり`**: decreases speed
-- **`もっと強く`**: makes her go harder
-- **`もっと優しく`**: makes her go less hard
-- **`ストップ`** or **`待って`**: makes her stop
-- **`もうダメ`**: immediately fills the excitement gauges
+-   **[BepInEx]**  `5.4.12+`
+
+-   **[KKAPI]**  `1.23.0+`
+
+<br>
+
+## Commands
+      
+[🇺🇸][English]       
+[🇯🇵][Japanese]
+
+<br>
+
+
+<!----------------------------------------------------------------------------->
+
+[UnityInput]: https://github.com/nhydock/BepInEx.UnityInput/releases 
+[BepInEx]: https://github.com/BepInEx/BepInEx/releases
+[KKAPI]: https://github.com/IllusionMods/IllusionModdingAPI/releases
+
+[Koikatsu Sunshine]: http://www.illusion.jp/preview/koikatsu_sunshine/
+[Koikatsu]: http://www.illusion.jp/preview/koikatu/
+
+[Japanese]: Documentation/Commands/Japanese.md 'Japanese Commands'
+[English]: Documentation/Commands/English.md 'English Commands'
+[License]: LICENSE
+
+
+<!---------------------------------[ Badges ]---------------------------------->
+
+[Badge License]: https://img.shields.io/badge/License-GPL_3-blue.svg?style=for-the-badge
+
+
+<!--------------------------------[ Buttons ]---------------------------------->
+
+[Button Japanese]: https://img.shields.io/badge/Japanese-ba002b?style=for-the-badge
+[Button English]: https://img.shields.io/badge/English-1b4379?style=for-the-badge
