@@ -3,41 +3,58 @@
 
 <br>
 
-### `<pose name>`
+### `  <Pose Name>  `
 
 Switches to the given H pose.
 
 *Works for side-loaded poses too.*
 
-### `undress`
+<br>
+
+### `  Undress  `
 
 Undresses the heroine.
 
-### `insert` / `put it in`
+<br>
+
+### `  Insert  `  /  `  Put it in  `
 
 Puts the thing into the thing.
 
-### `faster`
+<br>
 
-Starts the action, and increases speed if it's already started.
+### `  Faster  `
 
-### `slower`
+Starts the action, and increases <br>
+speed if it's already started.
+
+<br>
+
+### `  Slower  `
 
 Decreases speed.
 
-### `stronger` / `harder`
+<br>
+
+### `  Stronger  `  /  `  Harder  `
 
 Makes her go harder.
 
-### `weaker` / `softer`
+<br>
+
+### `  Weaker  `  /  `  Softer  `
 
 Makes her go less hard.
 
-### `stop` / `wait`
+<br>
+
+### `  Stop  `  /  `  Wait  `
 
 Makes her stop.
 
-### `I'm coming`
+<br>
+
+### `  I'm coming  `
 
 Immediately fills the excitement gauges.
 
@@ -45,4 +62,3 @@ Immediately fills the excitement gauges.
 you used the voice command for insertion.*
 
 <br>
-
