@@ -1,5 +1,5 @@
 
-#  🇺🇸  Voice commands
+# :uk:  Voice commands
 
 <br>
 

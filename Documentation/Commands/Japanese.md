@@ -1,5 +1,5 @@
 
-# 🇯🇵  Voice Commands
+# :jp:  Voice Commands
 
 <br>
 
